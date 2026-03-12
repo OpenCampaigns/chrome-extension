@@ -1,0 +1,45 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Tests
+      run: npm test
+
+    - name: Build Extension
+      run: npm run build
+
+    - name: Package Extension
+      run: |
+        mkdir -p release
+        cp -r dist/* release/
+        cp -r public/* release/
+        cd release && zip -r ../opencampaigns-extension.zip .
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: opencampaigns-extension
+        path: opencampaigns-extension.zip
