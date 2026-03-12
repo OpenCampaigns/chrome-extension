@@ -4,7 +4,7 @@
     "description": "OpenCampaigns Ad Replacement Network Extension",
     "type": "module",
     "scripts": {
-        "build": "esbuild src/background.ts src/content.ts src/popup.ts --bundle --outdir=dist --format=esm",
+        "build": "esbuild src/background.ts src/content.ts src/popup.ts --bundle --outdir=dist --format=esm && npm run copy",
         "copy": "cp public/* dist/",
         "test": "vitest run"
     },
