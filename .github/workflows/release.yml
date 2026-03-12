@@ -15,7 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Checkout SDK
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository_owner }}/sdk
+        path: ../sdk
+
+    - name: Checkout Display
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository_owner }}/display
+        path: ../display
 
     - name: Use Node.js 20.x
       uses: actions/setup-node@v4
